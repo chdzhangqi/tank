@@ -2,45 +2,30 @@ package com.chd.tank;
 
 import java.awt.*;
 
-public class Tank {
+public class Bullet {
+
+    public static final int SPEED = 10;
+    public static final int WIDTH = 30;
+    public static final int HEIGHT = 30;
     private int x;
     private int y;
-    private Dir dir = Dir.DOWN;
-    private static final int SPEED = 5;
+    private Dir dir;
 
-    private boolean moving = false;
-
-    public Tank(int x, int y, Dir dir) {
+    public Bullet(int x, int y, Dir dir) {
         this.x = x;
         this.y = y;
         this.dir = dir;
     }
 
-    public Dir getDir() {
-        return dir;
-    }
-
-    public void setDir(Dir dir) {
-        this.dir = dir;
-    }
-
     public void paint(Graphics g) {
-        g.fillRect(x, y, 50, 50);
+        Color color = g.getColor();
+        g.setColor(Color.red);
+        g.fillOval(x, y, WIDTH, HEIGHT);
+        g.setColor(color);
         move();
-
-    }
-
-    public boolean isMoving() {
-        return moving;
-    }
-
-    public void setMoving(boolean moving) {
-        this.moving = moving;
     }
 
     private void move() {
-        if (!moving)
-            return;
         switch (dir) {
             case UP:
                 y -= SPEED;

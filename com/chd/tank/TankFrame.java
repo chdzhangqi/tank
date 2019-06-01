@@ -8,7 +8,7 @@ import java.awt.event.WindowEvent;
 
 public class TankFrame extends Frame {
     Tank myTank = new Tank(200, 200, Dir.DOWN);
-
+    Bullet bullet = new Bullet(300, 300, Dir.DOWN);
     TankFrame() {
         setTitle("tank war");
         setResizable(false);
@@ -27,11 +27,10 @@ public class TankFrame extends Frame {
     @Override
     public void paint(Graphics g) {
         myTank.paint(g);
+        bullet.paint(g);
     }
 
     class MyKeyListener extends KeyAdapter {
-
-
         boolean bL = false;
         boolean bR = false;
         boolean bU = false;
@@ -87,7 +86,6 @@ public class TankFrame extends Frame {
                 if (bU) myTank.setDir(Dir.UP);
                 if (bD) myTank.setDir(Dir.DOWN);
             }
-
         }
     }
 }
