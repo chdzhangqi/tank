@@ -7,8 +7,8 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 public class TankFrame extends Frame {
-    private Tank myTank = new Tank(200, 200, Dir.DOWN);
-    private Bullet bullet = new Bullet(300, 300, Dir.DOWN);
+    private Tank myTank = new Tank(200, 200, Dir.DOWN, this);
+    Bullet bullet = new Bullet(300, 300, Dir.DOWN);
     private static final int GAME_WIDTH = 800;
     private static final int GAME_HEIGHT = 600;
     private Image offScreenImage = null;
@@ -92,6 +92,9 @@ public class TankFrame extends Frame {
                     break;
                 case KeyEvent.VK_UP:
                     bU = false;
+                    break;
+                case KeyEvent.VK_CONTROL:
+                    myTank.fire();
                     break;
             }
             changeDir();
