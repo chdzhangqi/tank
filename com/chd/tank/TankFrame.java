@@ -7,12 +7,15 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 public class TankFrame extends Frame {
-    Tank myTank = new Tank(200, 200, Dir.DOWN);
-    Bullet bullet = new Bullet(300, 300, Dir.DOWN);
+    private Tank myTank = new Tank(200, 200, Dir.DOWN);
+    private Bullet bullet = new Bullet(300, 300, Dir.DOWN);
+    private static final int GAME_WIDTH = 800;
+    private static final int GAME_HEIGHT = 600;
+    private Image offScreenImage = null;
     TankFrame() {
         setTitle("tank war");
         setResizable(false);
-        setSize(800, 600);
+        setSize(GAME_WIDTH, GAME_HEIGHT);
         setVisible(true);
         addWindowListener(new WindowAdapter() {
             @Override
@@ -20,8 +23,26 @@ public class TankFrame extends Frame {
                 System.exit(0);  // 退出程序
             }
         });
-
         addKeyListener(new MyKeyListener()); // source register listener
+    }
+
+    @Override
+    public void update(Graphics g) {
+        /**
+         * 游戏双缓冲技术，闪烁的问题就是一条一条的刷新出现问题。
+         * repaint  -->  update(截获) --> paint
+         * 在内存中有张图片，先将内存中的图片给画上，然后屏幕上一次性将内存的图片画出来。
+         */
+        if (offScreenImage == null){
+            offScreenImage = this.createImage(GAME_WIDTH, GAME_HEIGHT);
+        }
+        Graphics gOffScreen = offScreenImage.getGraphics();
+        Color c = gOffScreen.getColor();
+        gOffScreen.setColor(Color.BLACK);
+        gOffScreen.fillRect(0, 0, GAME_WIDTH, GAME_HEIGHT);
+        gOffScreen.setColor(c);
+        paint(gOffScreen);
+        g.drawImage(offScreenImage, 0, 0, null);
     }
 
     @Override

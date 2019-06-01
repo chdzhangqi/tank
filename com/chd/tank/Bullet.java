@@ -4,9 +4,9 @@ import java.awt.*;
 
 public class Bullet {
 
-    public static final int SPEED = 10;
-    public static final int WIDTH = 30;
-    public static final int HEIGHT = 30;
+    private static final int SPEED = 1;
+    private static final int WIDTH = 30;
+    private static final int HEIGHT = 30;
     private int x;
     private int y;
     private Dir dir;
