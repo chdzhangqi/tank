@@ -9,11 +9,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TankFrame extends Frame {
-    private Tank myTank = new Tank(200, 200, Dir.DOWN, this);
+    private Tank myTank = new Tank(200, 500, Dir.DOWN,Color.GREEN, this);
     List<Bullet> bullets = new ArrayList<>();
+    List<EnemyTank> enemies = new ArrayList<>();
     public static final int GAME_WIDTH = 800;
     public static final int GAME_HEIGHT = 600;
     private Image offScreenImage = null;
+    {
+        for (int i = 0; i < 5; i ++){
+            EnemyTank enemy = new EnemyTank(150, 10- 100*i, Dir.DOWN, Color.RED,this);
+            enemy.setMoving(true);
+            enemies.add(enemy);
+        }
+    }
     TankFrame() {
         setTitle("tank war");
         setResizable(false);
@@ -59,6 +67,10 @@ public class TankFrame extends Frame {
 //        }
         for(int i = 0; i < bullets.size(); ++i){
             bullets.get(i).paint(g);
+        }
+
+        for (int i =0; i < enemies.size(); ++i){
+            enemies.get(i).paint(g);
         }
     }
 

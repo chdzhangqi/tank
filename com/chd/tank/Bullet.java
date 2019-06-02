@@ -5,12 +5,15 @@ import java.awt.*;
 public class Bullet {
 
     private static final int SPEED = 10;
-    private static final int WIDTH = 30;
-    private static final int HEIGHT = 30;
+    public static final int WIDTH = 30;
+    public static final int HEIGHT = 30;
     private int x;
     private int y;
+    private int centerX;
+    private int centerY;
     private TankFrame tf;
     private Dir dir;
+
     private boolean live = true;
 
     public Bullet(int x, int y, Dir dir, TankFrame tf) {
@@ -20,9 +23,29 @@ public class Bullet {
         this.tf = tf;
     }
 
+    public void setLive(boolean live) {
+        this.live = live;
+    }
+
+    public int getCenterX() {
+        return this.x + WIDTH / 2;
+    }
+
+    public int getCenterY() {
+        return this.y + HEIGHT / 2;
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
     public void paint(Graphics g) {
 
-        if (!this.live){
+        if (!this.live) {
             tf.bullets.remove(this);
         }
         Color color = g.getColor();
@@ -49,7 +72,7 @@ public class Bullet {
             default:
                 break;
         }
-        if (x < 0 || x > TankFrame.GAME_WIDTH || y < 0 || y > TankFrame.GAME_HEIGHT){
+        if (x < 0 || x > TankFrame.GAME_WIDTH || y < 0 || y > TankFrame.GAME_HEIGHT) {
             live = false;
         }
     }
