@@ -9,11 +9,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TankFrame extends Frame {
-    private Tank myTank = new Tank(200, 200, Dir.DOWN, this);
+    private Tank myTank = new Tank(200, 500, Dir.UP, this);
     List<Bullet> bullets = new ArrayList<>();
+    List<Tank> enemies = new ArrayList<>();
     public static final int GAME_WIDTH = 800;
     public static final int GAME_HEIGHT = 600;
     private Image offScreenImage = null;
+
     TankFrame() {
         setTitle("tank war");
         setResizable(false);
@@ -35,7 +37,7 @@ public class TankFrame extends Frame {
          * repaint  -->  update(截获) --> paint
          * 在内存中有张图片，先将内存中的图片给画上，然后屏幕上一次性将内存的图片画出来。
          */
-        if (offScreenImage == null){
+        if (offScreenImage == null) {
             offScreenImage = this.createImage(GAME_WIDTH, GAME_HEIGHT);
         }
         Graphics gOffScreen = offScreenImage.getGraphics();
@@ -49,16 +51,18 @@ public class TankFrame extends Frame {
 
     @Override
     public void paint(Graphics g) {
-        Color c= g.getColor();
+        Color c = g.getColor();
         g.setColor(Color.WHITE);
-        g.drawString("子弹的数量:"+ bullets.size(), 10, 60);
+        g.drawString("子弹的数量:" + bullets.size(), 10, 60);
         g.setColor(c);
         myTank.paint(g);
-//        for(Bullet b:bullets){
-//            b.paint(g);
-//        }
-        for(int i = 0; i < bullets.size(); ++i){
+
+        for (int i = 0; i < bullets.size(); ++i) {
             bullets.get(i).paint(g);
+        }
+
+        for (int i = 0; i < enemies.size(); ++i) {
+            enemies.get(i).paint(g);
         }
     }
 
