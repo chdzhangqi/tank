@@ -12,6 +12,7 @@ public class TankFrame extends Frame {
     private Tank myTank = new Tank(200, 500, Dir.UP,Group.GOOD, this);
     List<Bullet> bullets = new ArrayList<>();
     List<Tank> enemies = new ArrayList<>();
+    Explode explode = new Explode(300, 30);
     public static final int GAME_WIDTH = 800;
     public static final int GAME_HEIGHT = 600;
     private Image offScreenImage = null;
@@ -54,9 +55,10 @@ public class TankFrame extends Frame {
         Color c = g.getColor();
         g.setColor(Color.WHITE);
         g.drawString("子弹的数量:" + bullets.size(), 10, 60);
+        g.drawString("敌人坦克的数量:" + enemies.size(), 10, 80);
         g.setColor(c);
         myTank.paint(g);
-
+        explode.paint(g);
         for (int i = 0; i < enemies.size(); ++i){
             for (int j = 0; j < bullets.size(); ++j){
                 enemies.get(i).collapse(bullets.get(j));
