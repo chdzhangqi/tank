@@ -9,19 +9,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TankFrame extends Frame {
-    private Tank myTank = new Tank(200, 500, Dir.DOWN,Color.GREEN, this);
+    private Tank myTank = new Tank(200, 500, Dir.UP,Group.GOOD, this);
     List<Bullet> bullets = new ArrayList<>();
-    List<EnemyTank> enemies = new ArrayList<>();
+    List<Tank> enemies = new ArrayList<>();
+    Explode explode = new Explode(300, 30);
     public static final int GAME_WIDTH = 800;
     public static final int GAME_HEIGHT = 600;
     private Image offScreenImage = null;
-    {
-        for (int i = 0; i < 5; i ++){
-            EnemyTank enemy = new EnemyTank(150, 10- 100*i, Dir.DOWN, Color.RED,this);
-            enemy.setMoving(true);
-            enemies.add(enemy);
-        }
-    }
+
     TankFrame() {
         setTitle("tank war");
         setResizable(false);
@@ -43,7 +38,7 @@ public class TankFrame extends Frame {
          * repaint  -->  update(截获) --> paint
          * 在内存中有张图片，先将内存中的图片给画上，然后屏幕上一次性将内存的图片画出来。
          */
-        if (offScreenImage == null){
+        if (offScreenImage == null) {
             offScreenImage = this.createImage(GAME_WIDTH, GAME_HEIGHT);
         }
         Graphics gOffScreen = offScreenImage.getGraphics();
@@ -57,19 +52,24 @@ public class TankFrame extends Frame {
 
     @Override
     public void paint(Graphics g) {
-        Color c= g.getColor();
+        Color c = g.getColor();
         g.setColor(Color.WHITE);
-        g.drawString("子弹的数量:"+ bullets.size(), 10, 60);
+        g.drawString("子弹的数量:" + bullets.size(), 10, 60);
+        g.drawString("敌人坦克的数量:" + enemies.size(), 10, 80);
         g.setColor(c);
         myTank.paint(g);
-//        for(Bullet b:bullets){
-//            b.paint(g);
-//        }
-        for(int i = 0; i < bullets.size(); ++i){
+        explode.paint(g);
+        for (int i = 0; i < enemies.size(); ++i){
+            for (int j = 0; j < bullets.size(); ++j){
+                enemies.get(i).collapse(bullets.get(j));
+            }
+        }
+
+        for (int i = 0; i < bullets.size(); ++i) {
             bullets.get(i).paint(g);
         }
 
-        for (int i =0; i < enemies.size(); ++i){
+        for (int i = 0; i < enemies.size(); ++i) {
             enemies.get(i).paint(g);
         }
     }
@@ -117,7 +117,7 @@ public class TankFrame extends Frame {
                     bU = false;
                     break;
                 case KeyEvent.VK_CONTROL:
-                    myTank.fire();
+                    myTank.fire(Group.GOOD);
                     break;
             }
             changeDir();
