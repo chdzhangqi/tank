@@ -1,6 +1,7 @@
 package com.chd.tank;
 
 import java.awt.*;
+import java.util.Random;
 
 public class Tank {
     private int x;
@@ -8,15 +9,18 @@ public class Tank {
     public static final int WIDTH = ResourceMgr.tankL.getWidth();
     public static final int HEIGHT = ResourceMgr.tankL.getHeight();
     private TankFrame tf;
-    private Dir dir = Dir.DOWN;
+    private Dir dir;
     private static final int SPEED = 5;
     private boolean moving = false;
     private boolean live = true;
+    private Group group;
+    private Random random = new Random();
 
-    public Tank(int x, int y, Dir dir, TankFrame tf) {
+    public Tank(int x, int y, Dir dir, Group group, TankFrame tf) {
         this.x = x;
         this.y = y;
         this.dir = dir;
+        this.group = group;
         this.tf = tf;
     }
 
@@ -43,6 +47,9 @@ public class Tank {
                 g.drawImage(ResourceMgr.tankR, x, y, null);
                 break;
         }
+        if (random.nextInt(10) > 8 && group.equals(Group.BAD)){
+            fire(Group.BAD);
+        }
         move();
 
     }
@@ -55,10 +62,10 @@ public class Tank {
         this.moving = moving;
     }
 
-    public void fire() {
+    public void fire(Group g) {
         int centerX = x + WIDTH / 2 - Bullet.WIDTH / 2;
         int centerY = y + HEIGHT / 2 - Bullet.HEIGHT / 2;
-        tf.bullets.add(new Bullet(centerX, centerY, this.dir, this.tf));
+        tf.bullets.add(new Bullet(centerX, centerY, this.dir, g, this.tf));
     }
 
     private void dead() {
@@ -90,6 +97,9 @@ public class Tank {
     }
 
     public void collapse(Bullet bullet) {
+        if (group.equals(bullet.getGroup())){
+            return;
+        }
         Rectangle tRect = new Rectangle(x, y, WIDTH, HEIGHT);
         Rectangle bRect = new Rectangle(bullet.getX(), bullet.getY(), Bullet.WIDTH, Bullet.HEIGHT);
         if (tRect.intersects(bRect)) {

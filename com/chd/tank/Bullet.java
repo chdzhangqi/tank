@@ -12,11 +12,13 @@ public class Bullet {
     private TankFrame tf;
     private Dir dir;
     private boolean live = true;
+    private Group group;
 
-    public Bullet(int x, int y, Dir dir, TankFrame tf) {
+    public Bullet(int x, int y, Dir dir,Group group, TankFrame tf) {
         this.x = x;
         this.y = y;
         this.dir = dir;
+        this.group = group;
         this.tf = tf;
     }
 
@@ -26,6 +28,10 @@ public class Bullet {
 
     public int getY() {
         return y;
+    }
+
+    public Group getGroup() {
+        return group;
     }
 
     public void paint(Graphics g) {

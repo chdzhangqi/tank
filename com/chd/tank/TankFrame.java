@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TankFrame extends Frame {
-    private Tank myTank = new Tank(200, 500, Dir.UP, this);
+    private Tank myTank = new Tank(200, 500, Dir.UP,Group.GOOD, this);
     List<Bullet> bullets = new ArrayList<>();
     List<Tank> enemies = new ArrayList<>();
     public static final int GAME_WIDTH = 800;
@@ -115,7 +115,7 @@ public class TankFrame extends Frame {
                     bU = false;
                     break;
                 case KeyEvent.VK_CONTROL:
-                    myTank.fire();
+                    myTank.fire(Group.GOOD);
                     break;
             }
             changeDir();
