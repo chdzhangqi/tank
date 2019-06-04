@@ -20,6 +20,14 @@ public class Bullet {
         this.tf = tf;
     }
 
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
     public void paint(Graphics g) {
 
         if (!this.live){
@@ -62,5 +70,9 @@ public class Bullet {
         if (x < 0 || x > TankFrame.GAME_WIDTH || y < 0 || y > TankFrame.GAME_HEIGHT){
             live = false;
         }
+    }
+
+    public void dead() {
+        live = false;
     }
 }

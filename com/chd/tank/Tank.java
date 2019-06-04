@@ -11,6 +11,7 @@ public class Tank {
     private Dir dir = Dir.DOWN;
     private static final int SPEED = 5;
     private boolean moving = false;
+    private boolean live = true;
 
     public Tank(int x, int y, Dir dir, TankFrame tf) {
         this.x = x;
@@ -56,11 +57,18 @@ public class Tank {
 
     public void fire() {
         int centerX = x + WIDTH / 2 - Bullet.WIDTH / 2;
-        int centerY = y + HEIGHT / 2 - Bullet.HEIGHT/ 2;
+        int centerY = y + HEIGHT / 2 - Bullet.HEIGHT / 2;
         tf.bullets.add(new Bullet(centerX, centerY, this.dir, this.tf));
     }
 
+    private void dead() {
+        live = false;
+    }
+
     private void move() {
+        if (!this.live) {
+            tf.enemies.remove(this);
+        }
         if (!moving)
             return;
         switch (dir) {
@@ -78,6 +86,15 @@ public class Tank {
                 break;
             default:
                 break;
+        }
+    }
+
+    public void collapse(Bullet bullet) {
+        Rectangle tRect = new Rectangle(x, y, WIDTH, HEIGHT);
+        Rectangle bRect = new Rectangle(bullet.getX(), bullet.getY(), Bullet.WIDTH, Bullet.HEIGHT);
+        if (tRect.intersects(bRect)) {
+            dead();
+            bullet.dead();
         }
     }
 }
