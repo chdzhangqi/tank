@@ -102,6 +102,12 @@ public class Tank {
             default:
                 break;
         }
+        edgeDetect();
+        tRect.x = x;
+        tRect.y = y;
+    }
+
+    private void edgeDetect() {
         if (group.equals(Group.BAD)) {
             if (x <= 0)
                 setDir(Dir.RIGHT);
@@ -121,8 +127,6 @@ public class Tank {
             if (y >= TankFrame.GAME_HEIGHT - HEIGHT)
                 y = TankFrame.GAME_HEIGHT - HEIGHT;
         }
-        tRect.x = x;
-        tRect.y = y;
     }
 
     public void collapse(Bullet bullet) {

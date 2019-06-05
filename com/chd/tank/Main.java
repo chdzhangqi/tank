@@ -7,7 +7,8 @@ public class Main {
      */
     public static void main(String[] args) {
         TankFrame tankFrame = new TankFrame();
-        for (int i = 0; i < 5; ++i) {
+        int initCount = Integer.parseInt((String)PropertyMgr.get("initTankCount"));
+        for (int i = 0; i < initCount; ++i) {
             Tank enemy = new Tank(100 + i * 100, 100, Dir.DOWN, Group.BAD, tankFrame);
             enemy.setMoving(true);
             tankFrame.enemies.add(enemy);
