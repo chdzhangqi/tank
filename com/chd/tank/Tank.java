@@ -47,8 +47,10 @@ public class Tank {
                 g.drawImage(ResourceMgr.tankR, x, y, null);
                 break;
         }
-        if (random.nextInt(10) > 8 && group.equals(Group.BAD)){
+        if (random.nextInt(10) > 8 && group.equals(Group.BAD)) {
             fire(Group.BAD);
+            if (random.nextInt(10) > 8)
+                setDir(Dir.values()[random.nextInt(Dir.values().length)]);
         }
         move();
 
@@ -70,6 +72,7 @@ public class Tank {
 
     private void dead() {
         live = false;
+        tf.explodes.add(new Explode(x, y, tf));
     }
 
     private void move() {
@@ -94,10 +97,30 @@ public class Tank {
             default:
                 break;
         }
+        if (group.equals(Group.BAD)) {
+            if (x <= 0)
+                setDir(Dir.RIGHT);
+            if (x >= TankFrame.GAME_WIDTH - WIDTH)
+                setDir(Dir.LEFT);
+            if (y <= 0)
+                setDir(Dir.DOWN);
+            if (y >= TankFrame.GAME_HEIGHT - HEIGHT)
+                setDir(Dir.UP);
+        } else if (group.equals(Group.GOOD)) {
+            if (x <= 0)
+                x = 0;
+            if (x >= TankFrame.GAME_WIDTH - WIDTH)
+                x = TankFrame.GAME_WIDTH - WIDTH;
+            if (y <= 0)
+                y = 0;
+            if (y >= TankFrame.GAME_HEIGHT - HEIGHT)
+                y = TankFrame.GAME_HEIGHT - HEIGHT;
+        }
+
     }
 
     public void collapse(Bullet bullet) {
-        if (group.equals(bullet.getGroup())){
+        if (group.equals(bullet.getGroup())) {
             return;
         }
         // TODO 隐藏的小BUG，每次调用new两个对象

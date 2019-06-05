@@ -17,12 +17,12 @@ public class Explode {
     }
 
     public void paint(Graphics g) {
+        if (count == 16) {
+            tf.explodes.remove(this);
+            return;
+        }
         g.drawImage(ResourceMgr.explodes[count], x, y, null);
         count++;
-        if (count == 16) {
-            count = 0;
-        }
-
     }
 
 }
