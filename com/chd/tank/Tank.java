@@ -100,6 +100,7 @@ public class Tank {
         if (group.equals(bullet.getGroup())){
             return;
         }
+        // TODO 隐藏的小BUG，每次调用new两个对象
         Rectangle tRect = new Rectangle(x, y, WIDTH, HEIGHT);
         Rectangle bRect = new Rectangle(bullet.getX(), bullet.getY(), Bullet.WIDTH, Bullet.HEIGHT);
         if (tRect.intersects(bRect)) {

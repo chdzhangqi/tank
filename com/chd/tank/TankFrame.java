@@ -12,7 +12,7 @@ public class TankFrame extends Frame {
     private Tank myTank = new Tank(200, 500, Dir.UP,Group.GOOD, this);
     List<Bullet> bullets = new ArrayList<>();
     List<Tank> enemies = new ArrayList<>();
-    Explode explode = new Explode(300, 30);
+    Explode explode = new Explode(300, 30, this);
     public static final int GAME_WIDTH = 800;
     public static final int GAME_HEIGHT = 600;
     private Image offScreenImage = null;
