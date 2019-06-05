@@ -15,6 +15,7 @@ public class Tank {
     private boolean live = true;
     private Group group;
     private Random random = new Random();
+    private Rectangle tRect = new Rectangle();
 
     public Tank(int x, int y, Dir dir, Group group, TankFrame tf) {
         this.x = x;
@@ -22,6 +23,10 @@ public class Tank {
         this.dir = dir;
         this.group = group;
         this.tf = tf;
+        tRect.x = x;
+        tRect.y = y;
+        tRect.height = HEIGHT;
+        tRect.width = WIDTH;
     }
 
     public Dir getDir() {
@@ -116,17 +121,15 @@ public class Tank {
             if (y >= TankFrame.GAME_HEIGHT - HEIGHT)
                 y = TankFrame.GAME_HEIGHT - HEIGHT;
         }
-
+        tRect.x = x;
+        tRect.y = y;
     }
 
     public void collapse(Bullet bullet) {
         if (group.equals(bullet.getGroup())) {
             return;
         }
-        // TODO 隐藏的小BUG，每次调用new两个对象
-        Rectangle tRect = new Rectangle(x, y, WIDTH, HEIGHT);
-        Rectangle bRect = new Rectangle(bullet.getX(), bullet.getY(), Bullet.WIDTH, Bullet.HEIGHT);
-        if (tRect.intersects(bRect)) {
+        if (tRect.intersects(bullet.bRect)) {
             dead();
             bullet.dead();
         }

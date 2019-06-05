@@ -13,6 +13,7 @@ public class Bullet {
     private Dir dir;
     private boolean live = true;
     private Group group;
+    Rectangle bRect = new Rectangle();
 
     public Bullet(int x, int y, Dir dir,Group group, TankFrame tf) {
         this.x = x;
@@ -20,6 +21,10 @@ public class Bullet {
         this.dir = dir;
         this.group = group;
         this.tf = tf;
+        bRect.x = x;
+        bRect.y = y;
+        bRect.width= WIDTH;
+        bRect.height = HEIGHT;
     }
 
     public int getX() {
@@ -73,6 +78,8 @@ public class Bullet {
             default:
                 break;
         }
+        bRect.x = x;
+        bRect.y = y;
         if (x < 0 || x > TankFrame.GAME_WIDTH || y < 0 || y > TankFrame.GAME_HEIGHT){
             live = false;
         }
